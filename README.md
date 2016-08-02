@@ -76,6 +76,7 @@ spring websocket
 
 sockjs
 	- https://github.com/sockjs/sockjs-client
+	- sockjs ie 8의 iframe-html은 sockjs.js 파일의 location이 일치해야 한다.
 	
 client code smaple
 	// var sockjs = new SockJS(url, _reserved, options);
