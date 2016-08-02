@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!-- 
+  <meta http-equiv="X-UA-Compatible" content="IE=8" />
+  <meta charset="UTF-8" />
+   -->
+  <script src="http://172.10.12.150:8080/sockjs/sockjs-1.1.1.js"></script>
+</head>
+<body>
+  <button id="sendmessage">Send from main page</button>
+  <button id="popup">Open popup</button>
+  <!-- 
+  <iframe src="./iframe.html"></iframe>
+   -->
+  <script>
+    // SockJS-node running on 192.168.0.21:8081
+    var sock = new SockJS('http://172.10.12.137:8081', null, {
+    	transports: [
+        'iframe-htmlfile' // The transoport we want to test
+      ]
+    });
+    // Informative messages
+    sock.onopen = function() {
+      console.log('open');
+    };
+    sock.onmessage = function(e) {
+      console.log('message', e.data);
+    };
+    sock.onclose = function() {
+      console.log('close');
+    };
+    /*
+    // Open the iframe in a popup
+    document.querySelector('#popup').attachEvent('onclick', function() {
+      window.open('/iframe.html', 'WindowName', 'menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes');
+    }, true);
+    // Send a message from the main page
+    document.querySelector('#sendmessage').attachEvent('onclick', function() {
+      sock.send("Here's some text that the server is urgently awaiting!");
+    }, true);
+    */
+  </script>
+</body>
+</html>

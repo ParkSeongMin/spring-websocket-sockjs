@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <meta charset="UTF-8" />
+    <title></title>
+  </head>
+  <body>
+    <button id="sendmessage">Send from popup/iframe</button>
+    <script>
+      document.querySelector('#sendmessage').attachEvent('onclick', function() {
+        // Use opener (popup) or parent (iframe) SockJS instance to send a message
+        (window.opener || window.parent).sock.send("Here's some text that the server is urgently awaiting!");
+      }, true);
+    </script>
+  </body>
+</html>
