@@ -6,40 +6,75 @@
   <meta charset="UTF-8" />
    -->
   <script src="http://172.10.12.150:8080/sockjs/sockjs-1.1.1.js"></script>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 </head>
 <body>
-  <button id="sendmessage">Send from main page</button>
-  <button id="popup">Open popup</button>
+	<!-- 
+	<form action="http://172.10.12.137:8081/greetings" method="get">
+	  <input type="submit" value="get session">
+	</form>
+	 -->
   <!-- 
   <iframe src="./iframe.html"></iframe>
    -->
+   
+   <button type="button" onclick="loadSession()">Request session</button>
+   <button type="button" onclick="loadSockjs()">Request sockjs</button>
   <script>
-    // SockJS-node running on 192.168.0.21:8081
-    var sock = new SockJS('http://172.10.12.137:8081', null, {
-    	transports: [
-        'iframe-htmlfile' // The transoport we want to test
-      ]
-    });
-    // Informative messages
-    sock.onopen = function() {
-      console.log('open');
-    };
-    sock.onmessage = function(e) {
-      console.log('message', e.data);
-    };
-    sock.onclose = function() {
-      console.log('close');
-    };
-    /*
-    // Open the iframe in a popup
-    document.querySelector('#popup').attachEvent('onclick', function() {
-      window.open('/iframe.html', 'WindowName', 'menubar=yes,location=yes,resizable=yes,scrollbars=yes,status=yes');
-    }, true);
-    // Send a message from the main page
-    document.querySelector('#sendmessage').attachEvent('onclick', function() {
-      sock.send("Here's some text that the server is urgently awaiting!");
-    }, true);
-    */
+  
+   function loadSession() {
+	   /*
+	  //var xhttp = new XMLHttpRequest();
+	  var xhttp = new XDomainRequest();
+	  
+	  xhttp.onload = function () {
+		    console.log(xhttp.responseText);
+		};
+	  xhttp.onreadystatechange = function() {
+	    if (xhttp.readyState == 4 && xhttp.status == 200) {
+	     // document.getElementById("demo").innerHTML = xhttp.responseText;
+	    	console.log(xhttp.responseText);
+	    }
+	  };
+	  xhttp.open("GET", "http://172.10.12.137:8081/greetings", true);
+	  xhttp.send();
+	  */
+	  
+	   $.ajax({
+		      url:"http://172.10.12.137:8081/jsonp",
+		      jsonp: "callback",
+		      contentType: "application/json",
+		      dataType: "jsonp",
+		      error: function(xhr, txtMessage, error){
+		          //do something
+		      },
+		      success: function(jsonString, txtMessage, xhr){
+		          alert("cookie="+document.cookie+", return="+jsonString);
+		          
+		      }
+		  });
+	}
+  
+   var sock;
+  	function loadSockjs() {
+  
+	    // SockJS-node running on 192.168.0.21:8081
+	   sock = new SockJS('http://172.10.12.137:8081/websocket', null, {
+	    	transports: [
+	        'iframe-htmlfile' // The transoport we want to test
+	        ], jsessionid:true
+	    });
+	    // Informative messages
+	    sock.onopen = function() {
+	      //console.log('open');
+	    };
+	    sock.onmessage = function(e) {
+	      //console.log('message', e.data);
+	    };
+	    sock.onclose = function() {
+	      //console.log('close');
+	    };
+	  }
   </script>
 </body>
 </html>
