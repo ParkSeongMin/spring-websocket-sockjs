@@ -5,6 +5,11 @@ spring boot / sockjs sample
 spring websocket
 	- http://docs.spring.io/spring/docs/current/spring-framework-reference/html/websocket.html
 
+for ie 8
+	https://www.w3.org/TR/P3P11/#compact_policies
+	p3p policy. compact policy (state allow - iframe cross domain cookie)
+	httpHeaders.set("P3P", "CP=\"STA\"");
+
 	@Configuration
 	@EnableWebSocket
 	public class WebSocketConfig implements WebSocketConfigurer {
